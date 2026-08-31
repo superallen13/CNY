@@ -1,0 +1,26 @@
+# Walk-policy eval of a trained CNY model. Switch dataset: --set eval_dataset=wikics
+
+# served model (edit these)
+backend_url: http://127.0.0.1:30000/v1
+model: /path/to/cny-qwen2.5-14b-checkpoint
+no_think: false
+
+# dataset
+eval_dataset: cora
+eval_subsample: 200
+
+# walk knobs (mirror training)
+walker_force_min_search: 0
+walker_max_hops: 5
+walker_walk_extend: true
+walker_neighbor_limit: 3
+walker_node_content_tokens: 120
+walker_preview_tokens: 20
+
+# generation
+max_in_flight: 32
+max_tokens: 1536
+temperature: 0.0
+max_turns: 5
+
+use_wandb: false

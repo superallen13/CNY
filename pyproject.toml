@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cny"
+version = "1.0.0"
+description = "CNY: Call Neighbours Yourself, RL for graph-walk reasoning on text-attributed graphs"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "torch>=2.1",
+    "transformers>=4.40",
+    "numpy",
+    "pandas",
+    "pyarrow",
+    "jinja2",
+    "pyyaml",
+    "httpx",
+    "openai>=2.36.0",
+    "datasets>=4.8.5",
+]
+
+[project.optional-dependencies]
+dev = ["pytest", "pytest-asyncio", "ruff", "black"]
+slime = []
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["walker*"]
+exclude = ["slime*", "tests*"]
+
+[tool.ruff]
+line-length = 119
+
+[tool.black]
+line-length = 119

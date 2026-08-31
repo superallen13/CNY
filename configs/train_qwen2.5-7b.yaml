@@ -1,0 +1,64 @@
+# Qwen2.5-7B OPD training on the 8-dataset combine.
+# 2 GPUs, Megatron TP=2, one SGLang engine reused as the OPD teacher.
+
+# paths (edit these)
+walker_hf_checkpoint: Qwen/Qwen2.5-7B-Instruct
+hf_local_dir_host: /path/to/hf_cache/qwen2.5-7B-instruct
+hf_local_dir_in_sif: /hf_ckpt/qwen2.5-7B-instruct
+model_arch: slime/scripts/models/qwen2.5-7B.sh
+sif_image: /path/to/slime_cuda.sif
+walker_venv: /path/to/walker_venv
+
+# rollout
+walker_max_hops: 5
+walker_force_min_search: 0
+walker_walk_extend: 1
+walker_neighbor_limit: 3
+walker_node_content_tokens: 120
+walker_preview_tokens: 20
+walker_dump_opd_csv: 0
+walker_return_logprob: 1
+walker_teacher_sleep: 0
+
+# OPD
+enable_opd: 1
+teacher_reuse_student: true
+opd_kl_coef: 0.03
+
+# RL hyperparams
+lr: 1e-6
+rollout_batch_size: 32
+n_samples_per_prompt: 8
+global_batch_size: 256
+rollout_max_response_len: 2048
+num_rollout: 1000
+
+# cluster topology
+cluster_num_nodes: 2
+cluster_gpus_per_node: 1
+tensor_parallel_size: 2
+pipeline_parallel_size: 1
+rollout_num_gpus_per_engine: 1
+
+# memory / sizing
+max_tokens_per_gpu: 8192
+log_probs_chunk_size: 256
+sglang_mem: 0.85
+sglang_context_length: 32768
+use_recompute: 1
+use_rollout_logprobs: 0
+precision_aware_adam: 1
+use_cpu_offload: 1
+eval_before_train: 1
+
+# datasets
+train_datasets: [citeseer, pubmed, photo, computer, history, sportsfit, instagram, wn18rr_edge_tag]
+eval_datasets: [cora, wikics]
+eval_subsample: 500
+eval_interval: 10
+save_interval: 10
+
+# wandb
+use_wandb: 0
+wandb_project: cny
+wandb_group: qwen2_5_7b_8ds_opd

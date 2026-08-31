@@ -1,0 +1,15 @@
+__pycache__/
+*.pyc
+*.egg-info/
+.venv/
+venv/
+outputs/
+wandb/
+*.log
+.DS_Store
+
+# prompts, graphs and checkpoints are distributed via Hugging Face
+data/
+checkpoints/
+.cache/
+sbatch_logs/
